@@ -1,3 +1,4 @@
+import { fectchDB } from "./db.js";
 
 let fullProducts = [];
 export let keyedFullProducts = [];
@@ -7,14 +8,7 @@ export let categorizedProducts = [];
 document.addEventListener("DOMContentLoaded", initApp);
 
 async function initApp() {
-
-  const url ='https://sarganar.github.io/appDLR/db/products.json'  ;
-  const data = await fetch(url);
-
-  const obj = JSON.parse(data);
-
-  console.log(obj);
-
+  fectchDB();
 }
 
 const keyBy = (arr, key) =>
@@ -22,4 +16,3 @@ const keyBy = (arr, key) =>
     acc[el[key]] = el;
     return acc;
   }, {});
-
