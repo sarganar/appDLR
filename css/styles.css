@@ -1,0 +1,73 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*--------------- Utilities ---------------*/
+.fb-center {
+  text-align: center;
+}
+
+/*--------------- Header ---------------*/
+.header {
+  margin-top: 1rem;
+}
+
+.logo {
+  width: 7rem;
+}
+
+/*--------------- Filters ---------------*/
+section.filters {
+  margin-top: 2rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+}
+
+.search {
+  width: 100%;
+}
+
+@media (max-width: 400px) {
+  .search {
+    width: 130%;
+  }
+}
+@media (max-width: 400px) {
+  .categories-select {
+    font-size: 15px;
+    max-width: 12rem;
+    margin-left: 5rem;
+  }
+}
+@media (max-width: 400px) {
+  .six.columns {
+    width: 48%;
+  }
+}
+
+/*--------------- Product List ---------------*/
+section.products-container {
+  margin-top: 1rem;
+}
+
+td span {
+  font-size: small;
+  padding-left: 1rem;
+}
+
+.no-stock,
+.discount-price {
+  text-decoration: line-through;
+}
+
+.messages-box {
+  margin: 10rem auto 0 auto;
+  text-align: center;
+  color: gray;
+}
