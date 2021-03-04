@@ -6,7 +6,14 @@ export let categorizedProducts = [];
 
 document.addEventListener("DOMContentLoaded", initApp);
 
-function initApp() {
+async function initApp() {
+
+  const url ='https://sarganar.github.io/appDLR/db/products.json'  ;
+  const data = await fetch(url);
+
+  const obj = JSON.parse(data);
+
+  console.log(obj);
 
 }
 
