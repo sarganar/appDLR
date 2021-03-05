@@ -1,3 +1,5 @@
+let products, discounts, zeroStock, contagramDB;
+
 export async function fectchDB() {
   const urlBase = "https://sarganar.github.io/appDLR/db/";
   const urlProducts = "products.json";
@@ -7,21 +9,32 @@ export async function fectchDB() {
 
   try {
     let response = await fetch(`${urlBase}${urlProducts}`);
-    const products = await response.json();
+    products = await response.json();
+    products = keyBy(products, "iddlr");
     console.log("products:", products);
 
     response = await fetch(`${urlBase}${urlDiscounts}`);
-    const discounts = await response.json();
+    discounts = await response.json();
+    discounts = keyBy(discounts, "iddlr");
     console.log("discounts:", discounts);
 
     response = await fetch(`${urlBase}${urlZeroStock}`);
-    const zeroStock = await response.json();
+    zeroStock = await response.json();
+    zeroStock = keyBy(zeroStock, "iddlr");
     console.log("zeroStock:", zeroStock);
 
     response = await fetch(`${urlBase}${urlContagramDB}`);
-    const contagramDB = await response.json();
+    contagramDB = await response.json();
+    contagramDB = keyBy(contagramDB, "cdigo");
     console.log("contagramDB", contagramDB);
   } catch (error) {
-    console.log('error:',error);
+    console.log("error:", error);
   }
 }
+
+const keyBy = (arr, key) =>
+  arr.reduce((acc, el) => {
+    const index = el[key] || Date.now();
+    acc[index] = el;
+    return acc;
+  }, {});

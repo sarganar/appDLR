@@ -1,8 +1,10 @@
 [
     {
-        "iddlr": 2004
+        "iddlr": 2004,
+        "nostock": true
     },
     {
-        "iddlr": 2003
+        "iddlr": 2003,
+        "nostock": true
     }
 ]
