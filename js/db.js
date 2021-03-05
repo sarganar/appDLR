@@ -1,3 +1,4 @@
+import { brand } from "../db/brand.js";
 let products, discounts, zeroStock, contagramDB;
 
 export async function fectchDB() {
@@ -38,3 +39,28 @@ const keyBy = (arr, key) =>
     acc[index] = el;
     return acc;
   }, {});
+
+export function buildPostProducts() {
+  for (let key in products) {
+    if (typeof contagramDB[key] !== "undefined") {
+      products[key].price = contagramDB[key].precioDeVenta;
+      // console.log(key);
+    } else {
+      console.log("no se encontro para:", key, products[key].name);
+    }
+
+    if (typeof discounts[key] !== "undefined") {
+      products[key].discounts = key;
+      // console.log(key);
+    } else {
+      products[key].discounts = "no-discounts";
+    }
+
+    let brandID = products[key].brand;
+    if (typeof brand[brandID] !== "undefined") {
+      products[key].brand = brand[brandID];
+    }
+  }
+
+  console.log(products);
+}

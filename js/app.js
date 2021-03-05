@@ -1,4 +1,4 @@
-import { fectchDB } from "./db.js";
+import { fectchDB, buildPostProducts } from "./db.js";
 
 let fullProducts = [];
 export let keyedFullProducts = [];
@@ -8,7 +8,7 @@ export let categorizedProducts = [];
 document.addEventListener("DOMContentLoaded", initApp);
 
 async function initApp() {
-  fectchDB();
+  await fectchDB();
+
+  buildPostProducts();
 }
-
-
