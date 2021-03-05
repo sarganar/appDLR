@@ -1,8 +1,14 @@
 [
     {
         "iddlr": "VR-46",
-        "text": "2 o + cajas 20%OFF",
+        "text": "2 o + cajas 10%OFF",
         "price": 2060,
+        "unit": "c/u"
+    },
+    {
+        "iddlr": "VR-46",
+        "text": "3 o + cajas 15% OFF",
+        "price": 1945,
         "unit": "c/u"
     }
 ]

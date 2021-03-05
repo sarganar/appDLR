@@ -1,4 +1,6 @@
 import { brand } from "../db/brand.js";
+import { categories } from "../db/categories.js";
+
 let products, discounts, zeroStock, contagramDB;
 
 export async function fectchDB() {
@@ -16,7 +18,7 @@ export async function fectchDB() {
 
     response = await fetch(`${urlBase}${urlDiscounts}`);
     discounts = await response.json();
-    discounts = keyBy(discounts, "iddlr");
+    //discounts = keyBy(discounts, "iddlr");
     console.log("discounts:", discounts);
 
     response = await fetch(`${urlBase}${urlZeroStock}`);
@@ -42,25 +44,47 @@ const keyBy = (arr, key) =>
 
 export function buildPostProducts() {
   for (let key in products) {
+    // PRICE
     if (typeof contagramDB[key] !== "undefined") {
       products[key].price = contagramDB[key].precioDeVenta;
       // console.log(key);
     } else {
-      console.log("no se encontro para:", key, products[key].name);
+      console.log("No se encontro precio para:", key, products[key].name);
     }
 
-    if (typeof discounts[key] !== "undefined") {
-      products[key].discounts = key;
-      // console.log(key);
-    } else {
-      products[key].discounts = "no-discounts";
-    }
-
+    // BRAND
     let brandID = products[key].brand;
     if (typeof brand[brandID] !== "undefined") {
       products[key].brand = brand[brandID];
     }
+
+    // CATEGORIES
+    let categoryID = products[key].category;
+    if (typeof categories[categoryID] !== "undefined") {
+      products[key].category = categories[categoryID];
+    }
+
+    // DISCOUNT AND STOCK : BY DEFAULT VALUES
+    products[key].hasDiscount = false;
+    products[key].hasStock = true;
+
+    // TAGS
+    populateTags(products[key]);
   }
+
+  discounts.forEach((element) => {
+    console.log(element.text);
+  });
 
   console.log(products);
 }
+
+function populateTags(product) {
+  let nameSplitted = product.name.trim().toLowerCase().split(" ");
+  nameSplitted = removeShortWords(nameSplitted);
+  product.tags = [...nameSplitted];
+  if (product.brand !== "NO-BRAND") {
+    product.tags = product.tags.concat(product.brand.toLowerCase());
+  }
+}
+const removeShortWords = (array) => array.filter((word) => word.length > 2);

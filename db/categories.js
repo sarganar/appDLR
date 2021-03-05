@@ -1,0 +1,8 @@
+export const categories = {
+  ALL: "TODAS",
+  CRN: "CARNES Y POLLOS",
+  GRAL: "CATALOGO GENERAL",
+  PAP: "PAPAS CONGELADAS",
+  MAR: "PESCADOS Y MARISCOS",
+  VER: "VERDURAS",
+};

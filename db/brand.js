@@ -1,5 +1,4 @@
 
-
 export const brand = {
   VID: "VIDAL FOODS",
   SOL: "SOLIMENO",
