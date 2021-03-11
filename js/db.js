@@ -3,7 +3,7 @@ import { categories } from "../db/categories.js";
 
 let products, discounts, zeroStock, contagramDB;
 
-export async function fectchDB() {
+export async function fetchDB() {
   const urlBase = "https://sarganar.github.io/appDLR/db/";
   const urlProducts = "products.json";
   const urlDiscounts = "discounts.json";
@@ -11,27 +11,40 @@ export async function fectchDB() {
   const urlContagramDB = "contagramDB.json";
 
   try {
-    let response = await fetch(`${urlBase}${urlProducts}`);
-    products = await response.json();
-    products = keyBy(products, "iddlr");
-    console.log("products:", products);
+    let response;
 
+    // BASE PRODUCTS
+    response = await fetch(`${urlBase}${urlProducts}`);
+    products = await response.json();
+
+    console.log("products:", products);
+    const test = [...products];
+    test.sort((a, b) => {
+      a.name > b.name ? 1 : -1;
+    });
+    console.log("test:", test);
+
+    products = keyBy(products, "iddlr");
+    console.log("fetchDB: products:", products);
+
+    // DISCOUNTS
     response = await fetch(`${urlBase}${urlDiscounts}`);
     discounts = await response.json();
-    //discounts = keyBy(discounts, "iddlr");
-    console.log("discounts:", discounts);
+    console.log("fetchDB: discounts:", discounts);
 
+    // STOCK
     response = await fetch(`${urlBase}${urlZeroStock}`);
     zeroStock = await response.json();
     zeroStock = keyBy(zeroStock, "iddlr");
-    console.log("zeroStock:", zeroStock);
+    console.log("fetchDB: zeroStock:", zeroStock);
 
+    // CONTAGRAM DB
     response = await fetch(`${urlBase}${urlContagramDB}`);
     contagramDB = await response.json();
     contagramDB = keyBy(contagramDB, "cdigo");
-    console.log("contagramDB", contagramDB);
+    console.log("fetchDB: contagramDB", contagramDB);
   } catch (error) {
-    console.log("error:", error);
+    console.log("fetchDB: error:", error);
   }
 }
 
@@ -53,27 +66,36 @@ export function buildPostProducts() {
     }
 
     // BRAND
-    let brandID = products[key].brand;
+    const brandID = products[key].brand;
     if (typeof brand[brandID] !== "undefined") {
       products[key].brand = brand[brandID];
     }
 
     // CATEGORIES
-    let categoryID = products[key].category;
+    const categoryID = products[key].category;
     if (typeof categories[categoryID] !== "undefined") {
       products[key].category = categories[categoryID];
     }
 
-    // DISCOUNT AND STOCK : BY DEFAULT VALUES
+    // DISCOUNT : DEFAULT VALUE
     products[key].hasDiscount = false;
+
+    // STOCK
     products[key].hasStock = true;
+    if (typeof zeroStock[key] !== "undefined") {
+      products[key].hasStock = false;
+    }
 
     // TAGS
     populateTags(products[key]);
   }
 
+  // REAL DISCOUNT
   discounts.forEach((element) => {
-    console.log(element.text);
+    const id = element.iddlr;
+    if (typeof products[id] !== "undefined") {
+      products[id].hasDiscount = true;
+    }
   });
 
   console.log(products);

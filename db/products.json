@@ -1,14 +1,14 @@
 [
     {
-        "name": "Aros de Calamar xKg",
-        "iddlr": "AMk",
-        "brand": "VID",
-        "category": "MAR"
-    },
-    {
         "name": "Camarón Pelado Ecuatoriano xKg",
         "iddlr": 2004,
         "brand": "NO-BRAND",
+        "category": "MAR"
+    },
+    {
+        "name": "Aros de Calamar xKg",
+        "iddlr": "AMk",
+        "brand": "VID",
         "category": "MAR"
     },
     {
