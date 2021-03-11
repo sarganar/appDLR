@@ -19,10 +19,10 @@ export async function fetchDB() {
 
     console.log("products:", products);
     const test = [...products];
-    test.sort((a, b) => {
-      a.name > b.name ? 1 : -1;
-    });
+    test.sort((a, b) => (a.name > b.name ? 1 : -1));
     console.log("test:", test);
+
+    buildLayoutScheme(products);
 
     products = keyBy(products, "iddlr");
     console.log("fetchDB: products:", products);
@@ -110,3 +110,53 @@ function populateTags(product) {
   }
 }
 const removeShortWords = (array) => array.filter((word) => word.length > 2);
+
+const getAllCategories = (products) => {
+  const categoriesSet = new Set();
+  products.forEach((product) => categoriesSet.add(product.category));
+
+  // console.log("*categoriesSet", categoriesSet);
+  return [...categoriesSet].sort();
+  // console.log("*categoriesArray", categoriesArray);
+};
+
+function buildLayoutScheme(products) {
+  // const categoriesSet = new Set();
+
+  // products.forEach((product) => categoriesSet.add(product.category));
+
+  // // console.log("*categoriesSet", categoriesSet);
+  // const categoriesArray=[...categoriesSet].sort();
+
+  const categoriesArray = getAllCategories(products);
+  console.log("*categoriesArray", categoriesArray);
+
+  let categoryObj = [];
+
+  categoriesArray.forEach((category) => {
+    let brandObj = [];
+    const filteredByCategory = products.filter(
+      (product) => product.category === category
+    );
+    // console.log(" category:", category);
+    const brandSet = new Set();
+    filteredByCategory.forEach((product) => brandSet.add(product.brand));
+
+    // console.log(" brandSet", brandSet);
+    brandSet.forEach((brand) => {
+      const filteredByBrand = filteredByCategory.filter(
+        (product) => product.brand === brand
+      );
+      //   console.log("  filteredByBrand", filteredByBrand);
+      const listId = [];
+      filteredByBrand.forEach((product) => {
+        listId.push(product.id);
+      });
+      brandObj[brand] = [...listId];
+    });
+    // console.log("  brandObj", brandObj);
+    categoryObj[category] = { ...brandObj };
+  });
+  console.log("categorizedProducts:", categoryObj);
+  return categoryObj;
+}

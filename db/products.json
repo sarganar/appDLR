@@ -44,5 +44,11 @@
         "name": "Filet de Abadejo IQF xKg",
         "brand": "NO-BRAND",
         "category": "MAR"
+    },
+    {
+        "name": "Papa Coolmind 10mm",
+        "iddlr": "344",
+        "brand": "SIMPLOT",
+        "category": "PAP"
     }
 ]
